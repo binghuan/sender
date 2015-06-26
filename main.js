@@ -1,6 +1,6 @@
-
 $("document").ready(function() {
 
+    composeMailContent();
     $("input").on("input", composeMailContent);
 
 });
@@ -9,8 +9,18 @@ function composeMailContent() {
 
     console.log(">>> composeMailContent");
 
-    var mailTO = "mailto:" + $("#id_mail").val() +
-        "?body=";
+    var mailTO = "mailto:" + $("#id_mail").val();
+        
+
+    var subject = $("#id_subject").val();
+    if(subject != null && subject.length > 0) {
+        var subjectEncodedString = encodeURIComponent(subject);
+        mailTO += "?subject=" + subjectEncodedString;
+        mailTO += "&body=";
+    } else {
+        mailTO += "?body=";
+    }
+
 
     var mailBody =
         "## Why check in:\n => " + $("#id_why").val() + "\n\n" +
